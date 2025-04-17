@@ -131,4 +131,7 @@ $app->loadController();
  * database. I also need to make sure that the token is being verified
  * when the user clicks on the link in the email.
  * Before I do that, I need to verify the user's email
+ * 
+ * This is to test the changes in git
+ * 
  */
