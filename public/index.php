@@ -132,6 +132,6 @@ $app->loadController();
  * when the user clicks on the link in the email.
  * Before I do that, I need to verify the user's email
  * 
- * testing one more time
+ * This is for the limit user login attempts
  * 
  */
