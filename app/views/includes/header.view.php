@@ -9,6 +9,29 @@
 <body>
     <?php
         $session = new \Core\Session;
+        
+        if($session->is_logged_in()) {
+          $current_page = $_SERVER['REQUEST_URI'];
+          $current_page = explode('/', $current_page);
+          $current_page = end($current_page);
+          echo "you are still logged in";
+          echo "<br>";
+          echo "your current page is: " . $current_page;
+          echo "<br>";
+          if($current_page == 'login') {
+            
+            echo "
+            <script>
+                if (confirm('Do you want to log out?')) {
+                    window.location.href = '" . ROOT . "/logout';
+                } else {
+                    window.history.back();
+                }
+            </script>
+            ";
+          }
+        }
+            
     ?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
