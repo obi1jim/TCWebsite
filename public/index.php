@@ -132,6 +132,14 @@ $app->loadController();
  * when the user clicks on the link in the email.
  * Before I do that, I need to verify the user's email
  * 
- * This is for the limit user login attempts
+ * 4/17/2025
+ * I just finished working on the limit for the number
+ * of login attempts. I need to make sure that the
+ * user is locked out for after 5 failed attempts.
+ * Now I need to work on making sure the user cannot go 
+ * to the login page if they are already logged in.
+ * After that I need to figure out how to time out
+ * the session when the user is inactive 
+ * for a certain amount of time.
  * 
  */

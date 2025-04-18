@@ -27,6 +27,7 @@ class User //extends \Model\Mailer
 		'access_granted',
 		'token_hash',
 		'token_expiry',
+		'login_attempts',
 	];
 
 	/*****************************
@@ -108,6 +109,7 @@ class User //extends \Model\Mailer
 			//$data['access_granted'] = 0; //default value for access granted. this will be changed to 1 when the user is granted access.
 
 			$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+			$data['login_attempts'] = 0;
 
 			//$data['role'] = 'user'; //default role, in case we have roles in the future.
 			//such as admin, user, etc.
@@ -150,13 +152,22 @@ class User //extends \Model\Mailer
 	public function login($data)
 	{
 		$row = $this->first([$this->loginUniqueColumn=>$data[$this->loginUniqueColumn]]);
-
+		//show($row);
 		if($row){
 
 			//confirm password
 			if(password_verify($data['password'], $row->password) && $row->access_granted == 1)
 			{
 				$ses = new \Core\Session;
+
+				if($row->login_attempts > 0){
+					//the attempts to login will be reset to 0
+					//after the user has logged in successfully.
+					$this->update($row->id, [
+						'login_attempts' => 0,
+					]);
+				}
+
 				$ses->auth($row);
 				/** This is for when I create a role variable that will
 				 * be used to redirect the user to the right page or the
@@ -178,9 +189,30 @@ class User //extends \Model\Mailer
 				redirect('home');
 			}else{
 				if($row->access_granted == 0){
-					$this->errors[$this->loginUniqueColumn] = "Your account is not activated yet. Verification process must take place. Contact developer for help.";
+					if($row->login_attempts >= 5){
+						$this->errors[$this->loginUniqueColumn] = "Your account has been locked. Contact developer for help.";
+					}else{
+						$this->errors[$this->loginUniqueColumn] = "Your account is not activated yet. Verification process must take place. Contact developer for help.";
+					}
+				}else if(password_verify($data['password'], $row->password) == false){
+					//this is for when the user has entered the wrong password.
+					//the login attempts will be increased by 1.
+					$this->update($row->id, [
+						'login_attempts' => $row->login_attempts + 1,
+					]);
+					if($row->login_attempts >= 5){
+						$this->update($row->id, [
+							'access_granted' => 0,
+						]);
+						$this->errors[$this->loginUniqueColumn] = "Your account has been locked. Contact developer for help.";
+					}else{
+						$this->errors[$this->loginUniqueColumn] = "Wrong ". underscore_to_space_str($this->loginUniqueColumn) . " or Password";
+					}
+
 				}else{
+					//this feels like a duplicate code but for now this will do. 
 					$this->errors[$this->loginUniqueColumn] = "Wrong ". underscore_to_space_str($this->loginUniqueColumn) . " or Password";
+
 				}
 			}
 		}else{
