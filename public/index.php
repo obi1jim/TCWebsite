@@ -142,4 +142,6 @@ $app->loadController();
  * the session when the user is inactive 
  * for a certain amount of time.
  * 
+ * This is testing the github connection
+ * 
  */
