@@ -27,6 +27,7 @@ class Users extends Migration
 		$this->addColumn('access_granted int(1) NULL DEFAULT 0');// everyone will be 0 by default.
 		$this->addColumn('token_hash varchar(64) NULL');
 		$this->addColumn('token_expiry datetime NULL');
+		$this->addColumn('login_attempts int(11) NULL DEFAULT 0');
 		//$this->addColumn('date_updated datetime NULL');
 		//I may need to add another column for the temporary hash value
 		//this is the column that will be used to store the hash value for the password reset link. I just don't know how I'll do it yet. 
@@ -45,6 +46,7 @@ class Users extends Migration
 		$this->addData('password', password_hash('193782jim', PASSWORD_DEFAULT));
 		$this->addData('full_name', 'Jimmy Uribe');
 		$this->addData('access_granted', 0);
+		$this->addData('login_attempts', 0);
 		
 		
 		//I commented this out because the table I created 
