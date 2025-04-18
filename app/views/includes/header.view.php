@@ -14,10 +14,7 @@
           $current_page = $_SERVER['REQUEST_URI'];
           $current_page = explode('/', $current_page);
           $current_page = end($current_page);
-          echo "you are still logged in";
-          echo "<br>";
-          echo "your current page is: " . $current_page;
-          echo "<br>";
+          
           if($current_page == 'login') {
             
             echo "
