@@ -186,7 +186,9 @@ class User //extends \Model\Mailer
 				 * 		break;
 				 * }
 				*/
-				redirect('home');
+				redirect('set_time');//I'm redirecting here because I want to start the 
+				//time tracking process. The set_time controller redirects to the home page.
+				//redirect('home');
 			}else{
 				if($row->access_granted == 0){
 					if($row->login_attempts >= 5){
@@ -299,9 +301,6 @@ class User //extends \Model\Mailer
 				}
 			}
 		}
-		
-		
-		
 	}
 	public function forgotPassword($data)
 	{
@@ -346,12 +345,8 @@ class User //extends \Model\Mailer
 					redirect('signup_success');
 				}else{
 					$this->errors['email'] = "Failed to send email!, data was not inserted into the database. Notify the developer Jimmy to fix this issue";
-				}
-					
-
+				}	
 			}
-		
 		}
 	}
-
 }
