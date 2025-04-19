@@ -7,11 +7,6 @@ defined('ROOTPATH') OR exit('Access Denied!');
 /**
  * Users class
  */
-// This is a sample migration file. You can use this as a template to create your own migration files.
-//the thunder file is a command line tool that helps you to create and run migrations.
-//it can also create controllers, models, and migrations for you.
-//this is why Users is used as a placeholder for the class name.
-//when you run the command "php thunder make:migration users"
 class Users extends Migration
 {
 	//this is when we create the table

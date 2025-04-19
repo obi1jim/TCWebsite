@@ -161,5 +161,11 @@ $app->loadController();
  * accessible to logged in users. I need to create a
  * way to only allow logged in users to access certain pages.
  * 
- * making sure the updates are applying to the main branch
+ * you need to finish creating the Tokes.php model.
+ * I've already started creating the model. I need to 
+ * figure out how the table will be created and 
+ * how I will display the information on the home page when
+ * the user is logged in. I also need to figure out how
+ * I will display the information on the home page when
+ * the user is not logged in.
  */
