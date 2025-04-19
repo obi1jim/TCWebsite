@@ -13,8 +13,16 @@ class About
 
 	public function index()
 	{
-
-		$this->view('about');
+		$data['title'] = 'About Us';
+		$ses = new \Core\Session;
+		if($ses->is_logged_in())
+		{
+			$this->view('about');
+		}
+		else
+		{
+			redirect('home');
+		}
 	}
 
 }

@@ -155,4 +155,10 @@ $app->loadController();
  * but I couldn't find a way to do it. I hope I didn't 
  * compromise the security of the app by doing this.
  * 
+ * 4/18/2025
+ * I discovered that when the user is logged out
+ * they can still access pages that are only supposed to be
+ * accessible to logged in users. I need to create a
+ * way to only allow logged in users to access certain pages.
+ * 
  */

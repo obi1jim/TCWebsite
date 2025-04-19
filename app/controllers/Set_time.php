@@ -13,11 +13,13 @@ class Set_time
 	/**
 	 * I created this controller because 
 	 * I wanted to test the session time out.
+	 * The session time out starts here when
+	 * the user logs in. 
 	 */
 	public function index()
 	{
 		
-		$data['title'] = 'Set_time';
+		$data['title'] = 'Redirecting...';
 		$ses = new \Core\Session;
 		if($ses->is_logged_in()){
 			$lastActivity = $ses->get('last_activity');
