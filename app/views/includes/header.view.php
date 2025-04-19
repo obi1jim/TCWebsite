@@ -9,12 +9,31 @@
 <body>
     <?php
         $session = new \Core\Session;
-        
+        $last_Activity = $session->get('last_activity');
+        $current_time = time();
+
         if($session->is_logged_in()) {
           $current_page = $_SERVER['REQUEST_URI'];
           $current_page = explode('/', $current_page);
           $current_page = end($current_page);
           
+          //echo "last_activity: " . $last_Activity . "<br>";
+          //echo "current time: " . $current_time . "<br>";
+          
+          if($current_time - $last_Activity > 1800) { // 30 minutes
+            echo "
+            <script>
+              alert('Your session has timed out. Please log in again.');
+              window.location.href = '" . ROOT . "/logout';
+            </script>
+            ";
+            $session->logout();
+          } 
+          else{
+            $session->set('last_activity', $current_time);
+          }     
+          //this is to check if the user is on the login page and if they are,
+          //then we will ask them if they want to log out or go back to the previous page
           if($current_page == 'login') {
             
             echo "
@@ -27,6 +46,7 @@
             </script>
             ";
           }
+
         }
             
     ?>

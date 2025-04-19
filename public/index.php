@@ -142,6 +142,23 @@ $app->loadController();
  * the session when the user is inactive 
  * for a certain amount of time.
  * 
- * Testing new branch updates
+ * 4/18/2025
+ * I just finished creating the code to time out the session
+ * I had to create a new controller called Set_time.php
+ * This controller sets the $session->get('last_activity');
+ * this will be recalled in the header.php file to 
+ * check if the user is inactive for 30 minutes.
+ * Since this is in the header.php file, it will be called on every page.
+ * I don't know if there is a better way, I couldn't find
+ * a way using any of the models in the framework. I thought 
+ * about doing this in the Session model or in the User model,
+ * but I couldn't find a way to do it. I hope I didn't 
+ * compromise the security of the app by doing this.
+ * 
+ * 4/18/2025
+ * I discovered that when the user is logged out
+ * they can still access pages that are only supposed to be
+ * accessible to logged in users. I need to create a
+ * way to only allow logged in users to access certain pages.
  * 
  */

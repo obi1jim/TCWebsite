@@ -78,7 +78,14 @@ class Session
 			
 			unset($_SESSION[$this->userkey]);
 		}
-
+		//I inserted this here beause the timer was not reseting
+		//after loggin out. 
+		if(!empty($_SESSION[$this->mainkey])){
+			
+			unset($_SESSION[$this->mainkey]);
+		}
+		
+		session_destroy();
 		return 0;
 	}
 

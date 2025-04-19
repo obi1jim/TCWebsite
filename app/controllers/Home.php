@@ -13,9 +13,10 @@ class Home
 
 	public function index()
 	{
-
 		$data['title'] = 'Home';
+
 		$this->view('home',$data);
+
 	}
 
 }
