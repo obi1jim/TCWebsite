@@ -20,7 +20,6 @@ $app = new App;
 $app->loadController();
 
 /**
- * you are at 16:50
  * you just learned what bootstrap is and I am starting 
  * to understand how to use this framework with bootstrap.
  * I am currently working on the home page. I am choosing the 
@@ -29,7 +28,6 @@ $app->loadController();
  * in the home page using the same method as the controllers.
  * 
  * 3/26/2025
- * you are at 42:52
  * I am testing the mirgration feature of the framework. 
  * I can create migrations where it stores the database 
  * schema in a file. I can also run the migrations to
@@ -43,7 +41,6 @@ $app->loadController();
  * match the specific project I am working on.
  * 
  * 3/27/2025
- * you are at 1:10:00
  * I just finished using the thunder file to create a migration file
  * and run the migration to create the users table.
  * I need to make sure that I can login with my creditials.
