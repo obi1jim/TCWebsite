@@ -5,16 +5,17 @@ namespace Controller;
 defined('ROOTPATH') OR exit('Access Denied!');
 
 /**
- * Tokes class
+ * Dailytokes class
  */
-class Tokes
+class Dailytokes
 {
 	use MainController;
 
 	public function index()
 	{
-
-		$this->view('tokes');
+		
+		$data['title'] = 'Daily Tokes';
+		$this->view('dailytokes', $data);
 	}
 
 }
