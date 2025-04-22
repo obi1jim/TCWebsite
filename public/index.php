@@ -165,4 +165,11 @@ $app->loadController();
  * the user is logged in. I also need to figure out how
  * I will display the information on the home page when
  * the user is not logged in.
+ * 
+ * 4/21/2025
+ * I've improved the footer and header files. 
+ * At this point I need to focus on the actual website.
+ * I need to decide what exactly the home page will display.
+ * I also need to decide what pages will be created since
+ * I keep changing my mind about it. 
  */
