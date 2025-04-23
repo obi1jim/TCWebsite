@@ -12,7 +12,7 @@ class Dailytokes
 	
 	use Model;
 
-	protected $table = 'tokes';
+	protected $table = 'dailytokes';
 	protected $primaryKey = 'id';
 	protected $loginUniqueColumn = 'delete_drop_date';
 

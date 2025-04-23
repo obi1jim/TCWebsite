@@ -172,4 +172,22 @@ $app->loadController();
  * I need to decide what exactly the home page will display.
  * I also need to decide what pages will be created since
  * I keep changing my mind about it. 
+ * 
+ * 4/22/2025
+ * I started working on the tables for the dailytokes and
+ * and payperiods. I need to figure out how to display the
+ * information on the home page when the user is logged in.
+ * But before I do that, I need to populate the data for the
+ * payperiods table first because deleting the dailytokes data
+ * that needs to be deleted is based on the payperiods table's
+ * end of payperiod data. 
+ * 
+ * I ran into another problem. I need to transfer data from
+ * an excel file to the database. I had to do this in 
+ * mysql workbench, which was nice so far. I still need to 
+ * finished editing the table to the correct data types.
+ * After that I will work on making a migration that will
+ * at least create the columns without data. so far, i've 
+ * converted the string to dates, now I need to convert the rest
+ * of the string into currency. 
  */
