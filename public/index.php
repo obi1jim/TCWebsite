@@ -190,4 +190,13 @@ $app->loadController();
  * at least create the columns without data. so far, i've 
  * converted the string to dates, now I need to convert the rest
  * of the string into currency. 
+ * 
+ * 4/23/2025
+ * I just learned the hard way to make sure I have 
+ * table backups since sql statements cannot be undone.
+ * I am still working on making sure I have the correct 
+ * data types for the columns in the database. This is 
+ * a lot harder than I thought. I can't move on with my 
+ * coding unless I have this done. Once I get this done, I
+ * can create the migration file with the correct data types.
  */
