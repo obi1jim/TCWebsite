@@ -205,4 +205,13 @@ $app->loadController();
  * unstall and reinstall xampp so make it work again.
  * I have to redo the database and get back to speed to 
  * where I left off. 
+ * 
+ * I fixed the issues with the database. the table for the
+ * payperiod is complete. I need to create the code to 
+ * access the table and display the data on the home page.
+ * Once I do that... let's just focus on this for now.
+ * 
+ * I created teh getCurrentPayperiod function that returns 
+ * a string in date format. This will be used to get the 
+ * starting point for the other table containing daily drops
  */
