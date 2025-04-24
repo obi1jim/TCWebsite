@@ -199,4 +199,10 @@ $app->loadController();
  * a lot harder than I thought. I can't move on with my 
  * coding unless I have this done. Once I get this done, I
  * can create the migration file with the correct data types.
+ * 
+ * 4/24/2025
+ * I had some issues with the database. I had to 
+ * unstall and reinstall xampp so make it work again.
+ * I have to redo the database and get back to speed to 
+ * where I left off. 
  */
