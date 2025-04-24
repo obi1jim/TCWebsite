@@ -15,18 +15,22 @@ class Payperiod extends Migration
 	{
 
 		/** create a table **/
-		$this->addColumn('id int(11) NOT NULL AUTO_INCREMENT');
-		$this->addColumn('start_payperiod datetime NOT NULL');
-		$this->addColumn('end_payperiod datetime NOT NULL');
-		$this->addColumn('adjustments DECIMAL(10,2) NULL');
-		$this->addColumn('total_drops DECIMAL(10,2) NULL');
-		$this->addColumn('total_hours int(11) NULL');
+		$this->addColumn('id int(20) NOT NULL AUTO_INCREMENT');
+		$this->addColumn('start_pp DATE NOT NULL');
+		$this->addColumn('end_pp DATE NOT NULL');
+		$this->addColumn('pickup_cost DECIMAL(10,2) NULL');
+		$this->addColumn('payroll_adj DECIMAL(10,2) NULL');
+		$this->addColumn('poker_other DECIMAL(10,2) NULL');
+		$this->addColumn('total_hrs DECIMAL(10,2) NULL');
+		$this->addColumn('td_no_adj DECIMAL(15,2) NULL');
 		$this->addColumn('toke_rate DECIMAL(10,2) NULL');
 		$this->addPrimaryKey('id');
 		/*
 		$this->addUniqueKey();
 		*/
 		$this->createTable('payperiod');
+		$this->addUniqueKey('start_pp');
+		$this->addUniqueKey('end_pp');
 
 		/** insert data **/
 		
