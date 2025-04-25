@@ -16,9 +16,10 @@ class Dailytokes extends Migration
 
 		/** create a table **/
 		$this->addColumn('id int(11) NOT NULL AUTO_INCREMENT');
-		$this->addColumn('date_drop datetime NOT NULL');
-		$this->addColumn('daily_drop_amount DECIMAL(10,2) NOT NULL');
-		$this->addColumn('delete_drop_date datetime NULL');
+		$this->addColumn('date_drop DATE NOT NULL');
+		$this->addColumn('daily_drop DECIMAL(15,2) NOT NULL');
+		$this->addColumn('expiry DATE NULL');//this will allow current and previous 
+		//payperiods to be in the table. Anything older than that will be deleted. 
 		$this->addPrimaryKey('id');
 		/*
 		$this->addUniqueKey();

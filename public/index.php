@@ -213,5 +213,9 @@ $app->loadController();
  * 
  * I created teh getCurrentPayperiod function that returns 
  * a string in date format. This will be used to get the 
- * starting point for the other table containing daily drops
+ * starting point for the other table containing daily drops.
+ * 
+ * I updated the home paga, dailytokes migration and 
+ * made it so the user can only see the daily 
+ * tokes page whe logged in.
  */
