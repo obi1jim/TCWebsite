@@ -62,7 +62,6 @@ class Payperiod
 		],
 	];
 
-	//returns a string 
 	public function getCurrentPayperiod(): string
 	{
 		//I need to get the current date;
@@ -98,6 +97,13 @@ class Payperiod
 		}
 		//this return a string of the date in the format of Y-m-d
 		return $Start_of_currentPayperiod->format('Y-m-d');
+	}
+	
+	public function getPreviousPayperiod():string
+	{
+		
+
+		return "hello";
 	}
 
 }
