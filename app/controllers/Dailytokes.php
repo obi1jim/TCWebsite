@@ -21,8 +21,13 @@ class Dailytokes
 			$data['title'] = 'Daily Tokes';
 			$payperiod = new \Model\Payperiod;
 			$data['start_pp'] = $payperiod->getCurrentPayperiod();
+			$data['previous_pp'] = $payperiod->getPreviousPayperiod();
+			//show($data['start_pp']);
+			//show($data['previous_pp']);
 			
-			$this->view('dailytokes');
+			//passing $data in the parameter passses the variables
+			//and their stored values to the view.
+			$this->view('dailytokes', $data);
 		}
 		else
 		{

@@ -223,4 +223,12 @@ $app->loadController();
  * 
  * I need to create the getPreviousPayperiod function 
  * and test it out before I move on. 
+ * 
+ * I completed the function to ge the previous pay period.
+ *  I also learned a bit more abouit the view() 
+ * and how to use the $data. I may need to double
+ * check this to make sure it works correctly. 
+ * Knowing what I do with the view() function, I can
+ * change the way the sessions works... or maybe I should
+ * leave it as is. I don't know yet.
  */

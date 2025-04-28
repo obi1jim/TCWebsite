@@ -62,6 +62,7 @@ class Payperiod
 		],
 	];
 
+	//returns false if the data is not valid
 	public function getCurrentPayperiod(): string
 	{
 		//I need to get the current date;
@@ -82,12 +83,20 @@ class Payperiod
 				$Start_of_currentPayperiod = new \DateTime($result[0]->start_pp);
 				//modifying the date to get the start of the current payperiod
 				$Start_of_currentPayperiod->modify('-14 day');
+
+				//$previousPayperiod = clone $Start_of_currentPayperiod;
+				//$previousPayperiod->modify('-14 day');
+
 				
 				//show("Start_of_currentPayperiod: ");
 				//show($Start_of_currentPayperiod);
+
+				//show ("Start_of_previousPayperiod: ");
+				//show($previousPayperiod);
+
 			}
 			else {
-				show("Invalid or empty result set.");
+				//show("Invalid or empty result set.");
 				return false;
 			}
 		}
@@ -101,9 +110,40 @@ class Payperiod
 	
 	public function getPreviousPayperiod():string
 	{
-		
+		//I need to get the current date;
+		date_default_timezone_set('America/New_York');
+		$strtoday = date('Y-m-d');
+		//I need to get the data with the current date
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strtoday}';";
+		$result = $this->query($query);
 
-		return "hello";
+		
+		//check if the result is valid or empty
+		if($result)
+		{
+			//this converst the desired data to a date object
+
+			if (is_array($result) && isset($result[0]->start_pp)) {
+				//creating variable to store the start of the current payperiod
+				$previousPayperiod = new \DateTime($result[0]->start_pp);
+				//modifying the date to get the start of the current payperiod
+				$previousPayperiod->modify('-28 day');
+
+				//show ("Start_of_previousPayperiod: ");
+				//show($previousPayperiod);
+
+			}
+			else {
+				//show("Invalid or empty result set.");
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+		//this return a string of the date in the format of Y-m-d
+		return $previousPayperiod->format('Y-m-d');
 	}
 
 }
