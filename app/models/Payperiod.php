@@ -90,6 +90,7 @@ class Payperiod
 				
 				//show("Start_of_currentPayperiod: ");
 				//show($Start_of_currentPayperiod);
+				//show($Start_of_currentPayperiod->format('l'));
 
 				//show ("Start_of_previousPayperiod: ");
 				//show($previousPayperiod);
@@ -131,6 +132,7 @@ class Payperiod
 
 				//show ("Start_of_previousPayperiod: ");
 				//show($previousPayperiod);
+				//show($previousPayperiod->format('l'));
 
 			}
 			else {

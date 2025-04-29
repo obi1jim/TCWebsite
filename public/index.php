@@ -231,4 +231,11 @@ $app->loadController();
  * Knowing what I do with the view() function, I can
  * change the way the sessions works... or maybe I should
  * leave it as is. I don't know yet.
+ * 
+ * 4/28/2025
+ * I am working on creating the updateDailyDropsTable function.
+ * This function will be used to update the daily drops table
+ * I need to figure out how I will do this. Right now, I am thinking
+ * of updating the date_drop column with the current date and set
+ * an expiry date for the current payperiod and the previous payperiod.
  */

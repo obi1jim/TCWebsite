@@ -7,21 +7,21 @@ defined('ROOTPATH') OR exit('Access Denied!');
 /**
  * Tokes class
  */
-class Dailytokes
+class Dailytokes extends Payperiod
 {
 	
 	use Model;
 
 	protected $table = 'dailytokes';
 	protected $primaryKey = 'id';
-	protected $loginUniqueColumn = 'delete_drop_date';
+	protected $loginUniqueColumn = 'date_drop';
 
 	protected $allowedColumns = [
 
+		'day_of_week',
 		'date_drop',
-		'daily_drop_amount',
-		'delete_drop_date',
-
+		'daily_drop',
+		'expiry',
 	];
 
 	/*****************************
@@ -67,6 +67,23 @@ class Dailytokes
 		//I need to make sure the date of the current pay period is known. I need to work on that first.
 
 
+	}
+	//This will be called everytime the user logs in to the system. 
+	public function updateDailyDropsTable(){
+		
+		$dailytokes = new Dailytokes;
+		
+		//getting the current date and the previous date and converting them to Date objects
+		$current_pp= date('Y-m-d', strtotime($dailytokes->getCurrentPayperiod()));
+		$previous_pp = date('Y-m-d', strtotime($dailytokes->getPreviousPayperiod()));
+
+
+		$this->update($this->table, $this->primaryKey, $current_date, [
+			'date_drop' => $current_date,
+			'expiry' => $previous_date,
+			'daily_drop' => 0.00,
+			
+		]);
 	}
 
 }
