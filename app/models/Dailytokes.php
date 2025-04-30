@@ -7,7 +7,7 @@ defined('ROOTPATH') OR exit('Access Denied!');
 /**
  * Tokes class
  */
-class Dailytokes extends Payperiod
+class Dailytokes
 {
 	
 	use Model;
@@ -64,26 +64,51 @@ class Dailytokes extends Payperiod
 			'delete_date_drop' => $this->loginUniqueColumn,
 		]);
 
-		//I need to make sure the date of the current pay period is known. I need to work on that first.
-
 
 	}
 	//This will be called everytime the user logs in to the system. 
 	public function updateDailyDropsTable(){
 		
-		$dailytokes = new Dailytokes;
+		$payperiod = new Payperiod;
 		
-		//getting the current date and the previous date and converting them to Date objects
-		$current_pp= date('Y-m-d', strtotime($dailytokes->getCurrentPayperiod()));
-		$previous_pp = date('Y-m-d', strtotime($dailytokes->getPreviousPayperiod()));
+		$current_pp = $payperiod->getCurrentPayperiod();
+		$previous_pp = $payperiod->getPreviousPayperiod();
+		if ($previous_pp === false) {
+			throw new \Exception("Failed to retrieve the previous pay period.");
+			die("Failed to retrieve the previous pay period.");
+		}
+		$previous_pp = new \DateTime($previous_pp);
+		$current_pp = new \DateTime($current_pp);
+		
+		$row = $this->first([$this->loginUniqueColumn=> $previous_pp->format('Y-m-d')]);
 
-
-		$this->update($this->table, $this->primaryKey, $current_date, [
-			'date_drop' => $current_date,
-			'expiry' => $previous_date,
-			'daily_drop' => 0.00,
+		if(empty($row)){
+			//getting the current date and the previous date and converting them to Date objects
 			
-		]);
-	}
+			//$previous_pp = date('Y-m-d', strtotime($dailytokes->getPreviousPayperiod()));
+			
 
+			//show("previous pp: " . $previous_pp->format('m/d/Y'));
+			//show("Current Pay Period: " );
+			//show($current_pp->format('m/d/Y'));
+			
+			$dateDrop = clone $previous_pp;
+			//show("Previous Pay Period: " . $dateDrop->format('m-d-Y'));
+			for($id = 1; $id <= 28; $id++)
+			{
+				//updating the daily drop for the current pay period
+				$this->update($id, [
+					'date_drop' => $dateDrop->format('Y-m-d'),
+				]);
+				
+				$dateDrop->modify('+1 day');
+				//show("Updating date drop: " . $date_drop->format('m-d-Y'));
+				
+			}
+		}
+		else{
+			show("nothing yet");
+			
+		}
+	}
 }

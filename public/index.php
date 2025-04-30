@@ -238,4 +238,15 @@ $app->loadController();
  * I need to figure out how I will do this. Right now, I am thinking
  * of updating the date_drop column with the current date and set
  * an expiry date for the current payperiod and the previous payperiod.
+ * 
+ * 4/30/2025
+ * I need to continue to work on the populateDates function.
+ * this will help populate the table with the correct dates
+ * when there are no dates later than the current date. 
+ * I will then pupulate the table if this is the case. 
+ * I will use the last the end_pp entry to see where does the curerent day compares
+ * to the end of the payperiod. I will then generate the dates until it 
+ * reaches the current pay period. I need to keep in mind that 
+ * the dates are payperiods and not daily drops. This should update
+ * whenever the user logs in. 
  */

@@ -43,6 +43,19 @@ class Dailytokes extends Migration
 			$this->addData('daily_drop', 0.00);
 			$this->insertData('dailytokes');
 		}
+		for($day = 0; $day < count($this->days); $day++)
+		{
+			$this->addData('day_of_week', $this->days[$day]);
+			$this->addData('daily_drop', 0.00);
+			$this->insertData('dailytokes');
+		}
+		for($day = 0; $day < count($this->days); $day++)
+		{
+			$this->addData('day_of_week', $this->days[$day]);
+			$this->addData('daily_drop', 0.00);
+			$this->insertData('dailytokes');
+		}
+
 		
 	} 
 	//this is when we drop the table

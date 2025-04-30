@@ -62,6 +62,55 @@ class Payperiod
 		],
 	];
 
+	public function populateDates(){
+
+		$strToday = date('Y-m-d');
+
+		//check if the table has data in the start_pp column
+		//if it doesn't then I will populate the table with 
+		//the current payperiod and the previous payperiod.
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strToday}';";
+		$result = $this->query($query);
+		show($result[0]);
+
+		//this if is for when the result is empty or false. the if($result) is temporary 
+		//and I will change it once I figure this out. 
+		//if($result == false || empty($result)){
+		if($result){
+			//show("data not found");
+			$query = "SELECT end_pp FROM {$this->table} ORDER BY end_pp DESC LIMIT 1;";
+			$result = $this->query($query);
+			show($result);
+
+			//comparing dates
+			$end_pp = new \DateTime($result[0]->end_pp);
+			$today = new \DateTime($strToday);
+			show($today);
+			$difference = $end_pp->diff($today);
+			$difference = $today->diff($end_pp);
+			show($difference->days);
+
+			//create a for loop an compare this to the current date. 
+			//if the current date is greater than the end_pp then I will 
+			//add +14 days to the end_pp and compare it to the current date again.
+			//Once the current date is less than the end_pp then I will break the loop.
+			//and update the table with the new end_pp and start_pp dates as the 
+			//for loop iterates.
+			$end_pp->modify('+14 day');
+			show($end_pp);
+
+			//I found a way to get the difference between two dates
+			//I need to use this info to populate the table with the current payperiod
+			//and the previous payperiod. It will depend how long its been since the last
+			//payperiod ended. I will use the difference to determine how many payperiods
+			//I need to add to the table.
+
+		}
+		else {
+			echo "this is the else";
+		}
+	}
+
 	//returns false if the data is not valid
 	public function getCurrentPayperiod(): string
 	{
@@ -106,7 +155,7 @@ class Payperiod
 			return false;
 		}
 		//this return a string of the date in the format of Y-m-d
-		return $Start_of_currentPayperiod->format('Y-m-d');
+		return $Start_of_currentPayperiod->format('m/d/Y');
 	}
 	
 	public function getPreviousPayperiod():string
@@ -145,7 +194,7 @@ class Payperiod
 			return false;
 		}
 		//this return a string of the date in the format of Y-m-d
-		return $previousPayperiod->format('Y-m-d');
+		return $previousPayperiod->format('m/d/Y');
 	}
 
 }
