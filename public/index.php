@@ -172,4 +172,96 @@ $app->loadController();
  * I need to decide what exactly the home page will display.
  * I also need to decide what pages will be created since
  * I keep changing my mind about it. 
+ * 
+ * 4/22/2025
+ * I started working on the tables for the dailytokes and
+ * and payperiods. I need to figure out how to display the
+ * information on the home page when the user is logged in.
+ * But before I do that, I need to populate the data for the
+ * payperiods table first because deleting the dailytokes data
+ * that needs to be deleted is based on the payperiods table's
+ * end of payperiod data. 
+ * 
+ * I ran into another problem. I need to transfer data from
+ * an excel file to the database. I had to do this in 
+ * mysql workbench, which was nice so far. I still need to 
+ * finished editing the table to the correct data types.
+ * After that I will work on making a migration that will
+ * at least create the columns without data. so far, i've 
+ * converted the string to dates, now I need to convert the rest
+ * of the string into currency. 
+ * 
+ * 4/23/2025
+ * I just learned the hard way to make sure I have 
+ * table backups since sql statements cannot be undone.
+ * I am still working on making sure I have the correct 
+ * data types for the columns in the database. This is 
+ * a lot harder than I thought. I can't move on with my 
+ * coding unless I have this done. Once I get this done, I
+ * can create the migration file with the correct data types.
+ * 
+ * 4/24/2025
+ * I had some issues with the database. I had to 
+ * unstall and reinstall xampp so make it work again.
+ * I have to redo the database and get back to speed to 
+ * where I left off. 
+ * 
+ * I fixed the issues with the database. the table for the
+ * payperiod is complete. I need to create the code to 
+ * access the table and display the data on the home page.
+ * Once I do that... let's just focus on this for now.
+ * 
+ * I created teh getCurrentPayperiod function that returns 
+ * a string in date format. This will be used to get the 
+ * starting point for the other table containing daily drops.
+ * 
+ * I updated the home paga, dailytokes migration and 
+ * made it so the user can only see the daily 
+ * tokes page whe logged in.
+ * 
+ * 4/27/2025
+ * 
+ * I need to create the getPreviousPayperiod function 
+ * and test it out before I move on. 
+ * 
+ * I completed the function to ge the previous pay period.
+ *  I also learned a bit more abouit the view() 
+ * and how to use the $data. I may need to double
+ * check this to make sure it works correctly. 
+ * Knowing what I do with the view() function, I can
+ * change the way the sessions works... or maybe I should
+ * leave it as is. I don't know yet.
+ * 
+ * 4/28/2025
+ * I am working on creating the updateDailyDropsTable function.
+ * This function will be used to update the daily drops table
+ * I need to figure out how I will do this. Right now, I am thinking
+ * of updating the date_drop column with the current date and set
+ * an expiry date for the current payperiod and the previous payperiod.
+ * 
+ * 4/30/2025
+ * I need to continue to work on the populateDates function.
+ * this will help populate the table with the correct dates
+ * when there are no dates later than the current date. 
+ * I will then pupulate the table if this is the case. 
+ * I will use the last the end_pp entry to see where does the curerent day compares
+ * to the end of the payperiod. I will then generate the dates until it 
+ * reaches the current pay period. I need to keep in mind that 
+ * the dates are payperiods and not daily drops. This should update
+ * whenever the user logs in. 
+ * 
+ * 5/1/2025
+ * I just finished the populateDates function.
+ * the function adds the dates to the table if there are no
+ * dates in the table that are greater than the current date.
+ * this is based on the start_pp column. The function will 
+ * automatically add the dates to the table.
+ * 
+ * I need to work on the updateDailyDropsTable function.
+ * I made some changes to improve the code for when the table is empty.
+ * I still need to work on it, and I will need to figure out how to 
+ * remove the outdated data from the table and shift the current
+ * that has been outdated to the previous payperiod. Then I can update 
+ * the dropdate values to the correct previoius and current payperiods
+ * dates in the dailytokes table.
  */

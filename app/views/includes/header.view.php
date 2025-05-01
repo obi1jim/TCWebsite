@@ -63,7 +63,7 @@
         </li>
         <?php if($session->is_logged_in()): ?> <!--if the user is logged in, show the link to the dashboard-->
             <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="<?=ROOT?>/Dailytokes">Tokes</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="<?=ROOT?>/about">About</a> 

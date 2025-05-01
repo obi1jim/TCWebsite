@@ -7,33 +7,39 @@ defined('ROOTPATH') OR exit('Access Denied!');
 /**
  * Dailytokes class
  */
-// This is a sample migration file. You can use this as a template to create your own migration files.
-//the thunder file is a command line tool that helps you to create and run migrations.
-//it can also create controllers, models, and migrations for you.
-//this is why Dailytokes is used as a placeholder for the class name.
-//when you run the command "php thunder make:migration dailytokes"
+
 class Dailytokes extends Migration
 {
+
+	private $days = ['Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
 	//this is when we create the table
 	public function up()
 	{
 
 		/** create a table **/
 		$this->addColumn('id int(11) NOT NULL AUTO_INCREMENT');
-		$this->addColumn('date_drop datetime NULL');
-		$this->addColumn('daily_drop_amount DECIMAL(10,2) NOT NULL');
-		$this->addColumn('delete_drop_date datetime NULL');
+		$this->addColumn('day_of_week VARCHAR(10) NOT NULL');
+		$this->addColumn('date_drop DATE NULL');
+		$this->addColumn('daily_drop DECIMAL(15,2) NULL');
+		$this->addColumn('expiry DATE NULL');//this will allow current and previous 
+		//payperiods to be in the table. Anything older than that will be deleted. 
 		$this->addPrimaryKey('id');
 		/*
 		$this->addUniqueKey();
 		*/
-		$this->createTable('tokes');
+		$this->createTable('dailytokes');
+		$this->addUniqueKey('date_drop');
 
 		/** insert data **/
-		$this->addData('date_created',date("Y-m-d H:i:s"));
-		$this->addData('date_updated',date("Y-m-d H:i:s"));
-
-		$this->insertData('tokes');
+		for($i = 0; $i < 4; $i++)
+		{
+			for($day = 0; $day < count($this->days); $day++)
+			{
+				$this->addData('day_of_week', $this->days[$day]);
+				$this->addData('daily_drop', 0.00);
+				$this->insertData('dailytokes');
+			}
+		}
 	} 
 	//this is when we drop the table
 	public function down()
