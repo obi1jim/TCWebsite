@@ -84,9 +84,35 @@ class Dailytokes
 		$previous_pp = new \DateTime($previous_pp);
 		$current_pp = new \DateTime($current_pp);
 		
-		$row = $this->first([$this->loginUniqueColumn=> $previous_pp->format('Y-m-d')]);
+		//$row = $this->first([$this->loginUniqueColumn=> $previous_pp->format('Y-m-d')]);
+		$row = $this->findAll();
+		//reverse the $row array that way $row[0] will be the first element in the array corresponding to the entry with the 
+		//id of 1. This will be the first entry in the table.
+		$row = array_reverse($row);
+		$empty_row_count = 0;
+		if(sizeof($row) !== 28){
+			echo "The table is either empty, incomplete, or wrong. <br>";
+			//echo "The table has " . sizeof($row) . " rows. and it should have exactly 28 <br>";
+			
+			die("Notify developer to fix issue. How, u ask? They didn't want to put their information here. Ask table games management who the dev is and they can let them know abou the issue.<br>");
+			redirect('home');
+		}
 
-		if(empty($row)){
+		for($i = 0; $i < sizeof($row); $i++)
+		{
+			//show($row[$i]->date_drop);
+			if($row[$i]->date_drop === null){
+				$empty_row_count++;
+			}
+			else if($row[$i]->date_drop === "0000-00-00"){
+				$empty_row_count++;
+			}else{
+				continue;
+			}
+		}
+
+		//this populates the table if the table is empty.
+		if($empty_row_count > 0){
 			//getting the current date and the previous date and converting them to Date objects
 			
 			//$previous_pp = date('Y-m-d', strtotime($dailytokes->getPreviousPayperiod()));
@@ -112,8 +138,9 @@ class Dailytokes
 		}
 		else{
 			show("udpateDailyDropsTable():<br>");
-			show("the row was not empty. Start of previous pay period is: <br>");
-			show($row);
+			show("the row was not empty. <br>");
+			
+			//show($row);
 			
 		}
 	}

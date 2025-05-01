@@ -256,4 +256,12 @@ $app->loadController();
  * dates in the table that are greater than the current date.
  * this is based on the start_pp column. The function will 
  * automatically add the dates to the table.
+ * 
+ * I need to work on the updateDailyDropsTable function.
+ * I made some changes to improve the code for when the table is empty.
+ * I still need to work on it, and I will need to figure out how to 
+ * remove the outdated data from the table and shift the current
+ * that has been outdated to the previous payperiod. Then I can update 
+ * the dropdate values to the correct previoius and current payperiods
+ * dates in the dailytokes table.
  */

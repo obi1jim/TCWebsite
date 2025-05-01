@@ -11,7 +11,7 @@ Trait Model
 {
 	use Database;
 
-	public $limit 		= 10;
+	public $limit 		= 30;
 	public $offset 		= 0;
 	public $order_type 	= "desc";
 	public $order_column = "id";
