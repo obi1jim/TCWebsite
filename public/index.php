@@ -249,4 +249,11 @@ $app->loadController();
  * reaches the current pay period. I need to keep in mind that 
  * the dates are payperiods and not daily drops. This should update
  * whenever the user logs in. 
+ * 
+ * 5/1/2025
+ * I just finished the populateDates function.
+ * the function adds the dates to the table if there are no
+ * dates in the table that are greater than the current date.
+ * this is based on the start_pp column. The function will 
+ * automatically add the dates to the table.
  */

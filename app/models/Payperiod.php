@@ -17,7 +17,7 @@ class Payperiod
 	protected $loginUniqueColumn = 'start_pp';
 
 	protected $allowedColumns = [
-
+		'id',
 		'start_pp',
 		'end_pp',
 		'pickup_cost',
@@ -62,8 +62,12 @@ class Payperiod
 		],
 	];
 
+	//this function will populate the table with more payperiods
+	//dates if they happen to run out. this updates the payperiod table.
+	//This will ensure that the table always has the current payperiod so 
+	//that the DailyTokes table can be use that data to update the daily drops table.
 	public function populateDates(){
-
+		date_default_timezone_set('America/New_York');
 		$strToday = date('Y-m-d');
 
 		//check if the table has data in the start_pp column
@@ -71,24 +75,39 @@ class Payperiod
 		//the current payperiod and the previous payperiod.
 		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strToday}';";
 		$result = $this->query($query);
-		show($result[0]);
+		//show($result[0]);
 
 		//this if is for when the result is empty or false. the if($result) is temporary 
 		//and I will change it once I figure this out. 
-		//if($result == false || empty($result)){
-		if($result){
-			//show("data not found");
-			$query = "SELECT end_pp FROM {$this->table} ORDER BY end_pp DESC LIMIT 1;";
-			$result = $this->query($query);
-			show($result);
+		if($result == false || empty($result)){
 
-			//comparing dates
-			$end_pp = new \DateTime($result[0]->end_pp);
+			/*This shows up when the table doesn't have the next payperiod.
+			The current date was compared and the function did 
+			not find any start_pp dates that were greater than 
+			the current date. This means three things: 1) the table is
+			empty <br> 2) the table only has data up to the current payperiod.
+			Or 3) the table has data but the start_pp dates are all in the past beyond the the previous payperiod.
+			*/
+
+			$query = "SELECT * FROM {$this->table} ORDER BY end_pp DESC LIMIT 1;";
+			$result = $this->query($query);
+			//show("result (should be the last entry of the end_pp:");
+			//show($result);
+
+			$endpp = new \DateTime($result[0]->end_pp);
+			//show("endpp:");
+			//show($endpp);
+			$startpp = clone $endpp;
+			//this gets me the start of the payperiod for the last record
+			$startpp->modify('-13 day');
+			//show("startpp:");
+			//show($startpp);
 			$today = new \DateTime($strToday);
-			show($today);
-			$difference = $end_pp->diff($today);
-			$difference = $today->diff($end_pp);
-			show($difference->days);
+			//show("today:");
+			//show($today);
+			//$difference = $today->diff($endpp);
+			//show("difference between today and the last record of the end_pp: ".$difference->days);
+			
 
 			//create a for loop an compare this to the current date. 
 			//if the current date is greater than the end_pp then I will 
@@ -96,18 +115,38 @@ class Payperiod
 			//Once the current date is less than the end_pp then I will break the loop.
 			//and update the table with the new end_pp and start_pp dates as the 
 			//for loop iterates.
-			$end_pp->modify('+14 day');
-			show($end_pp);
 
-			//I found a way to get the difference between two dates
-			//I need to use this info to populate the table with the current payperiod
-			//and the previous payperiod. It will depend how long its been since the last
-			//payperiod ended. I will use the difference to determine how many payperiods
-			//I need to add to the table.
+			//this limit exists in case something goes wrong and the loop runs forever.
+			$limit = 0;
+			//this is so that the id nunber increaes by 1 with each iteration.
+			//this is to ensure that the id number is unique and does not repeat and its inserted at the end of the table.
+			$incID = $result[0]->id;
+			while ($startpp < $today && $limit < 50) {
+				$startpp = $startpp->modify('+14 day');
+				$endpp = $endpp->modify('+14 day');
 
-		}
-		else {
-			echo "this is the else";
+				//this insert the new entry at the end of the table
+				$this->insert([
+					'id' => ++$incID,
+					'start_pp' => $startpp->format('Y-m-d'),
+					'end_pp' => $endpp->format('Y-m-d'),
+					'pickup_cost' => 0.00,
+					'payroll_adj' => 0.00,
+					'poker_other' => 0.00,
+					'total_hrs' => 0.00,
+					'td_no_adj' => 0.00,
+					'toke_rate' => 0.00,
+				]);
+				/*show("startpp: ".$startpp->format('Y-m-d'));
+				show("endpp: ".$endpp->format('Y-m-d'));
+				show("today: ".$today->format('Y-m-d'));
+				show("incID: ".$incID);
+				show("limit: ".$limit);
+				*/
+
+				$limit++;
+				
+			}
 		}
 	}
 

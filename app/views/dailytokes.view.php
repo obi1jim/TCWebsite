@@ -5,8 +5,6 @@
     
         show($data['start_pp']);
         show($data['previous_pp']);
-        show($data['dow_start']);
-        show($data['dow_previous']);
         
      ?>
     <h1>Welcome to the Daily Tokes Page</h1>

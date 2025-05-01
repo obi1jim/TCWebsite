@@ -66,7 +66,11 @@ class Dailytokes
 
 
 	}
-	//This will be called everytime the user logs in to the system. 
+	//This will be called everytime the user logs in to the system.
+	//this function will be used to update the daily drops table based on the 
+	//current pay period of the Payperiod table. Once the new pay period starts,
+	//the daily drops table will be updated with the new dates along with the drops
+	//being reset to 0. This will be done by getting the start date of the pay period.
 	public function updateDailyDropsTable(){
 		
 		$payperiod = new Payperiod;
@@ -107,7 +111,9 @@ class Dailytokes
 			}
 		}
 		else{
-			show("nothing yet");
+			show("udpateDailyDropsTable():<br>");
+			show("the row was not empty. Start of previous pay period is: <br>");
+			show($row);
 			
 		}
 	}
