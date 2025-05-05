@@ -265,5 +265,10 @@ $app->loadController();
  * the dropdate values to the correct previoius and current payperiods
  * dates in the dailytokes table.
  * 
- * Testing merge updates in side branch vs main branch.
+ * 5/4/2025
+ * I manage to update the expiry date along witht the date_drop dates
+ * this will only occure when the table is empty or has empty or null values
+ * within the date_drop and expiry columns. Now I need to figure out how to use
+ * the expiry date to shift the table so that the current payperiod becomes 
+ * the previous payperiod and the new payperiod becomes the current payperiod.
  */

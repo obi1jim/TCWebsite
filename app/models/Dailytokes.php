@@ -98,13 +98,14 @@ class Dailytokes
 			redirect('home');
 		}
 
+		//this checks if there are any empty rows or rows with the date_drop column set to 0000-00-00.
 		for($i = 0; $i < sizeof($row); $i++)
 		{
 			//show($row[$i]->date_drop);
-			if($row[$i]->date_drop === null){
+			if($row[$i]->date_drop === null || $row[$i]->expiry === null){
 				$empty_row_count++;
 			}
-			else if($row[$i]->date_drop === "0000-00-00"){
+			else if($row[$i]->date_drop === "0000-00-00" || $row[$i]->expiry === "0000-00-00"){
 				$empty_row_count++;
 			}else{
 				continue;
@@ -121,14 +122,22 @@ class Dailytokes
 			//show("previous pp: " . $previous_pp->format('m/d/Y'));
 			//show("Current Pay Period: " );
 			//show($current_pp->format('m/d/Y'));
-			
+			$end_of_pp = clone $current_pp;
+			$end_of_pp->modify('+13 day');
 			$dateDrop = clone $previous_pp;
 			//show("Previous Pay Period: " . $dateDrop->format('m-d-Y'));
 			for($id = 1; $id <= 28; $id++)
 			{
+				if($id === 15){
+					echo "inside the if statement. this modifies the end of pp<br>";
+					$end_of_pp->modify('+14 day');
+				}else{
+					echo "inside the else statement. this modifies the end of pp<br>";
+				}
 				//updating the daily drop for the current pay period
 				$this->update($id, [
 					'date_drop' => $dateDrop->format('Y-m-d'),
+					'expiry' => $end_of_pp->format('Y-m-d'),
 				]);
 				
 				$dateDrop->modify('+1 day');
@@ -136,12 +145,23 @@ class Dailytokes
 				
 			}
 		}
-		else{
-			show("udpateDailyDropsTable():<br>");
-			show("the row was not empty. <br>");
+
+		//check if the expiry is null or 0000-00-00.
+		if(true){
+
+		}
+		
+			//here I need to find a way to update the daily drop column with the
+			// expiry date. The expiry date for the previous pay period will be the
+			//end of the current pay period. Once the current pay period ends, I 
+			//need to replayce the previous pay period with the new previous 
+			//pay period which was the current pay period. The new current pay 
+			//pay period will be created and will have empty or zero values for the
+			//daily drop column. In a way, when the dates are updated, I could do 
+			//it there instead of here. Since the dates get updated and will change
+			//based on the current day vs the current pay period, I will just update
+			//the daily drops as the date drops are updated. that way they stay in sync.
 			
 			//show($row);
-			
-		}
 	}
 }
