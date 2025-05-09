@@ -22,8 +22,8 @@ class Dailytokes
 			$payperiod = new \Model\Payperiod;
 			
 			$payperiod->populateDates();
-			$data['start_pp'] = $payperiod->getCurrentPayperiod();
-			$data['previous_pp'] = $payperiod->getPreviousPayperiod();
+			// $data['start_pp'] = $payperiod->getCurrentPayperiod();
+			// $data['previous_pp'] = $payperiod->getPreviousPayperiod();
 
 			//The strtotime() function converts the date string into a Unix timestamp,
 			//which is an integer representing the number of seconds since January 1, 1970 

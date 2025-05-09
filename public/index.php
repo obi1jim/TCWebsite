@@ -271,4 +271,16 @@ $app->loadController();
  * within the date_drop and expiry columns. Now I need to figure out how to use
  * the expiry date to shift the table so that the current payperiod becomes 
  * the previous payperiod and the new payperiod becomes the current payperiod.
+ * 
+ * 5/8/2025
+ * 
+ * I managed to update the daily drops table automatically based on the 
+ * current day and shift the table to make room for the new pay period. 
+ * I also discovered if the user logged out and hit the back button,
+ * they would be able to visit previous pages they visited as if they were
+ * logged in. I fixed this by putting session_regenerate_id(true) in the 
+ * logout function.
+ * 
+ * At this point, I need to populate the webpage with the toke 
+ * rate data. I will try and use bootstrap. 
  */

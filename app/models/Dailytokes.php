@@ -83,6 +83,11 @@ class Dailytokes
 		}
 		$previous_pp = new \DateTime($previous_pp);
 		$current_pp = new \DateTime($current_pp);
+		// $Test_previous_pp = clone($previous_pp);
+		// $Test_previous_pp->modify('-14 day');
+		// $Test_current_pp = clone($current_pp);
+		// $Test_current_pp->modify('-14 day');
+
 		
 		//$row = $this->first([$this->loginUniqueColumn=> $previous_pp->format('Y-m-d')]);
 		$row = $this->findAll();
@@ -129,10 +134,10 @@ class Dailytokes
 			for($id = 1; $id <= 28; $id++)
 			{
 				if($id === 15){
-					echo "inside the if statement. this modifies the end of pp<br>";
+					//echo "inside the if statement. this modifies the end of pp<br>";
 					$end_of_pp->modify('+14 day');
 				}else{
-					echo "inside the else statement. this modifies the end of pp<br>";
+					//echo "inside the else statement. this modifies the end of pp<br>";
 				}
 				//updating the daily drop for the current pay period
 				$this->update($id, [
@@ -146,8 +151,62 @@ class Dailytokes
 			}
 		}
 
-		//check if the expiry is null or 0000-00-00.
-		if(true){
+		date_default_timezone_set('America/New_York');
+		$strtoday = date('Y-m-d');
+		//check the expiry.
+		if($row[0]->expiry < $strtoday ){
+			$dateDrop = new \DateTime($payperiod->getCurrentPayperiod());
+			$end_of_new_pp = clone $dateDrop;
+			$end_of_new_pp->modify('+27 day');
+
+			// show("The expiry date is: " . $row[0]->expiry . "<br>");
+			// show("The current date is: " . $strtoday . "<br>");
+			// show("The current pay period is: " . $Test_current_pp->format('m/d/Y') . "<br>");
+			// show("The previous pay period is: " . $Test_previous_pp->format('m/d/Y') . "<br>");
+			// $newpp = clone $Test_current_pp;
+			// $newpp->modify('+14 day');
+			// show("Start of the new pay period is: " . $newpp->format('m/d/Y') . "<br>");
+			// show("looking at the row: " . $row[13+1]->date_drop . "<br>");
+			// show("row daily drop: " . $row[13+1]->daily_drop . "<br>");
+			// show("row expiry: " . $row[13+1]->expiry . "<br>");
+			// show("row first element: " . $row[0]->id);
+
+			for($i = 0; $i < 14; $i++)
+			{
+				//updating the daily drop for the current pay period
+				$this->update($row[$i]->id, [
+					'date_drop' => $row[14+$i]->date_drop,
+					'daily_drop' => $row[14+$i]->daily_drop,
+					'expiry' => $row[14+$i]->expiry,
+				]);
+
+				//show("update row: " . $row[$i]->id . " with: " . $row[14+$i]->date_drop . ' ' . $row[14+$i]->daily_drop . ' '. $row[14+$i]->expiry);
+				
+			}
+			
+			for($i = 14; $i < 28; $i++){
+
+				//here I need to create a date object so I can increament 
+				//the day to update the new pay period dates. Don't forget to change 
+				//back the current_pp in line 86 and 87
+				
+				//$row[$i]->date_drop = $payperiod->getCurrentPayperiod();
+				
+					
+				$row[$i]->expiry = $end_of_new_pp->format('Y-m-d');
+				
+				$row[$i]->daily_drop = 0.00;
+
+				//show("update row## " . $row[$i]->id . " with: " . $dateDrop->format("Y-m-d") . ' ' . $row[$i]->daily_drop . ' '. $row[$i]->expiry);
+				
+				$this->update($row[$i]->id, [
+					'date_drop' => $dateDrop->format("Y-m-d"),
+					'daily_drop' => $row[$i]->daily_drop,
+					'expiry' => $row[$i]->expiry,
+				]);
+				$dateDrop->modify('+1 day');
+			}
+
 
 		}
 		

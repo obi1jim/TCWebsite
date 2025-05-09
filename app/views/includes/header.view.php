@@ -12,6 +12,12 @@
         $last_Activity = $session->get('last_activity');
         $current_time = time();
 
+        //this is to disable catching. I don't think I need it but its 
+        //here just in case. 
+        // header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		    // header("Cache-Control: post-check=0, pre-check=0", false);
+		    // header("Pragma: no-cache");
+
         if($session->is_logged_in()) {
           $current_page = $_SERVER['REQUEST_URI'];
           $current_page = explode('/', $current_page);

@@ -2,9 +2,6 @@
 <!-- I think this is where the main tag goes -->
 <main class="container">
     <?php 
-    
-        show($data['start_pp']);
-        show($data['previous_pp']);
         
      ?>
     <h1>Welcome to the Daily Tokes Page</h1>
