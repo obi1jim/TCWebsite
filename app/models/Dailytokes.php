@@ -91,6 +91,10 @@ class Dailytokes
 		
 		//$row = $this->first([$this->loginUniqueColumn=> $previous_pp->format('Y-m-d')]);
 		$row = $this->findAll();
+		if($row === false) {
+			throw new \Exception("Failed to retrieve data from the database.");
+			die("Failed to retrieve data from the database.");
+		}
 		//reverse the $row array that way $row[0] will be the first element in the array corresponding to the entry with the 
 		//id of 1. This will be the first entry in the table.
 		$row = array_reverse($row);
@@ -209,18 +213,17 @@ class Dailytokes
 
 
 		}
-		
-			//here I need to find a way to update the daily drop column with the
-			// expiry date. The expiry date for the previous pay period will be the
-			//end of the current pay period. Once the current pay period ends, I 
-			//need to replayce the previous pay period with the new previous 
-			//pay period which was the current pay period. The new current pay 
-			//pay period will be created and will have empty or zero values for the
-			//daily drop column. In a way, when the dates are updated, I could do 
-			//it there instead of here. Since the dates get updated and will change
-			//based on the current day vs the current pay period, I will just update
-			//the daily drops as the date drops are updated. that way they stay in sync.
-			
-			//show($row);
+	}
+
+	public function getDailyDrop()
+	{
+		//$row = $this->first([$this->loginUniqueColumn => $date]);
+		$row = $this->findAll();
+		if($row === false) {
+			throw new \Exception("Failed to retrieve data from the database.");
+			die("Failed to retrieve data from the database.");
+		}
+
+		return $row;
 	}
 }

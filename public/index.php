@@ -283,4 +283,10 @@ $app->loadController();
  * 
  * At this point, I need to populate the webpage with the toke 
  * rate data. I will try and use bootstrap. 
+ * 
+ * 5/15/2025
+ * I need to make sure that whenever I am done creading this app,
+ * I'll need to set the value false in the config.php file where
+ * it says "define('DEBUG', true);". This will not show any errors 
+ * that will expose information about the app. 
  */
