@@ -17,12 +17,26 @@ Trait Model
 	public $order_column = "id";
 	public $errors 		= [];
 
-	public function findAll()
+	/*public function findAll()
 	{
 	 
 		$query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
 
 		return $this->query($query);
+	}*/
+	public function findAll()
+	{
+
+		try {
+			$query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
+			return $this->query($query);
+		} catch (\Throwable $e) {
+			// Log the detailed error for developers
+			error_log("Database error: " . $e->getMessage());
+			// Show a generic error message to the user
+			echo "An unexpected error occurred. Please contact support.";
+			return false;
+    	}
 	}
 
 	public function where($data, $data_not = [])
@@ -47,7 +61,7 @@ Trait Model
 		return $this->query($query, $data);
 	}
 
-	public function first($data, $data_not = [])
+	/*public function first($data, $data_not = [])
 	{
 		$keys = array_keys($data);
 		$keys_not = array_keys($data_not);
@@ -71,6 +85,36 @@ Trait Model
 			return $result[0];
 
 		return false;
+	}*/
+	public function first($data, $data_not = [])
+	{
+		$keys = array_keys($data);
+		$keys_not = array_keys($data_not);
+		$query = "select * from $this->table where ";
+
+		foreach ($keys as $key) {
+			$query .= $key . " = :". $key . " && ";
+		}
+
+		foreach ($keys_not as $key) {
+			$query .= $key . " != :". $key . " && ";
+		}
+		
+		$query = trim($query," && ");
+
+		$query .= " limit $this->limit offset $this->offset";
+		$data = array_merge($data, $data_not);
+
+		try {
+			$result = $this->query($query, $data);
+			if($result)
+				return $result[0];
+			return false;
+		} catch (\Throwable $e) {
+			error_log("Database error: " . $e->getMessage());
+			echo "An unexpected error occurred. Please contact support.";
+			return false;
+		}
 	}
 	//this is used in the signup function in the User model.
 	public function insert($data)

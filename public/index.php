@@ -264,4 +264,29 @@ $app->loadController();
  * that has been outdated to the previous payperiod. Then I can update 
  * the dropdate values to the correct previoius and current payperiods
  * dates in the dailytokes table.
+ * 
+ * 5/4/2025
+ * I manage to update the expiry date along witht the date_drop dates
+ * this will only occure when the table is empty or has empty or null values
+ * within the date_drop and expiry columns. Now I need to figure out how to use
+ * the expiry date to shift the table so that the current payperiod becomes 
+ * the previous payperiod and the new payperiod becomes the current payperiod.
+ * 
+ * 5/8/2025
+ * 
+ * I managed to update the daily drops table automatically based on the 
+ * current day and shift the table to make room for the new pay period. 
+ * I also discovered if the user logged out and hit the back button,
+ * they would be able to visit previous pages they visited as if they were
+ * logged in. I fixed this by putting session_regenerate_id(true) in the 
+ * logout function.
+ * 
+ * At this point, I need to populate the webpage with the toke 
+ * rate data. I will try and use bootstrap. 
+ * 
+ * 5/15/2025
+ * I need to make sure that whenever I am done creading this app,
+ * I'll need to set the value false in the config.php file where
+ * it says "define('DEBUG', true);". This will not show any errors 
+ * that will expose information about the app. 
  */

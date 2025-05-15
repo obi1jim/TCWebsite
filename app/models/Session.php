@@ -79,12 +79,20 @@ class Session
 			unset($_SESSION[$this->userkey]);
 		}
 		//I inserted this here beause the timer was not reseting
-		//after loggin out. 
+		//after loggin out. 5/8/2025 I need to test this again
 		if(!empty($_SESSION[$this->mainkey])){
 			
 			unset($_SESSION[$this->mainkey]);
 		}
-		
+		/**
+		 * for some reason this doesn't allow the user
+		 * to log back in again automatically when they hit the back 
+		 * button after login out. if this is not here then the '
+		 * user can logout and hit the back button and see all the 
+		 * previous pages that were visited as if they user was 
+		 * logged in. 
+		 */
+		session_regenerate_id(true);
 		session_destroy();
 		return 0;
 	}
