@@ -103,7 +103,7 @@ class Dailytokes
 			echo "The table is either empty, incomplete, or wrong. <br>";
 			//echo "The table has " . sizeof($row) . " rows. and it should have exactly 28 <br>";
 			
-			die("Notify developer to fix issue. How, u ask? They didn't want to put their information here. Ask table games management who the dev is and they can let them know abou the issue.<br>");
+			die("Notify developer to fix issue. How, u ask? They didn't want to put their information here. Ask table games management who the dev is and they can let them know about the issue.<br>");
 			redirect('home');
 		}
 

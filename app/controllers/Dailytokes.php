@@ -33,7 +33,7 @@ class Dailytokes
 
 			$dailytokes = new \Model\Dailytokes;
 			$dailytokes->updateDailyDropsTable();
-			$data['daily_tokes'] = $dailytokes->getDailyDrop();
+			$data['daily_tokes'] = array_reverse($dailytokes->getDailyDrop());
 
 			
 			

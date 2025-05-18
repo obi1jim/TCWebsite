@@ -289,4 +289,11 @@ $app->loadController();
  * I'll need to set the value false in the config.php file where
  * it says "define('DEBUG', true);". This will not show any errors 
  * that will expose information about the app. 
+ * 
+ * 5/18/2025
+ * I am currently working on the dailytokes tables. I managed to
+ * display the data with the correct format. Now I need to somehow display
+ * toke rate for the previous payperiod and make a prediction toke rate for
+ * the current payperiod. I don't know how I will do this yet. Also, make a new
+ * branch so that I am not working on the main branch.
  */
