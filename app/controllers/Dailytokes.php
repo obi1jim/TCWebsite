@@ -20,8 +20,14 @@ class Dailytokes
 			//allow users with access to this page
 			$data['title'] = 'Daily Tokes';
 			$payperiod = new \Model\Payperiod;
+			$dailytokes = new \Model\Dailytokes;
 			
 			$payperiod->populateDates();
+			$data['ctd_sum'] = $dailytokes->getCurrentTotalDropsSum();
+			$data['ptd_sum'] = $dailytokes->getPreviousTotalDropsSum();
+			$data['pTokeRate'] = $payperiod->getPreviousTokeRate($data['ptd_sum']);
+			$data['estimate_hours'] = $payperiod->getEstimateHours();
+			$data['days_drop_count'] = $dailytokes->getNumDaysWithDrops();
 			// $data['start_pp'] = $payperiod->getCurrentPayperiod();
 			// $data['previous_pp'] = $payperiod->getPreviousPayperiod();
 
@@ -31,7 +37,7 @@ class Dailytokes
 			//$data['dow_start'] = date('l', strtotime($data['start_pp']));
 			//$data['dow_previous'] = date('l', strtotime($data['previous_pp']));
 
-			$dailytokes = new \Model\Dailytokes;
+			
 			$dailytokes->updateDailyDropsTable();
 			$data['daily_tokes'] = array_reverse($dailytokes->getDailyDrop());
 

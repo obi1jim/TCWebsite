@@ -226,4 +226,47 @@ class Dailytokes
 
 		return $row;
 	}
+	public function getCurrentTotalDropsSum(){
+		// This will get the sum of the daily drops for the last 14 entries (by id descending, then sum)
+		$query = "SELECT SUM(daily_drop) as total_drops FROM (SELECT daily_drop FROM {$this->table} ORDER BY id DESC LIMIT 14) as last14;";
+		$result = $this->query($query);
+		
+		if($result === false) {
+			throw new \Exception("Failed to retrieve data from the database.");
+			die("Failed to retrieve data from the database.");
+		}
+
+		return $result[0]->total_drops;
+	}
+
+	public function getPreviousTotalDropsSum(){
+		// This will get the sum of the daily drops for the first 14 entries (by id ascending, then sum)
+		$query = "SELECT SUM(daily_drop) as total_drops FROM (SELECT daily_drop FROM {$this->table} ORDER BY id ASC LIMIT 14) as first14;";
+		$result = $this->query($query);
+
+		if($result === false) {
+			throw new \Exception("Failed to retrieve data from the database.");
+			die("Failed to retrieve data from the database.");
+		}
+
+		return $result[0]->total_drops;
+	}
+	public function getNumDaysWithDrops(){
+		$row = $this->findAll();
+		if($row === false) {
+			throw new \Exception("Failed to retrieve data from the database.");
+			die("Failed to retrieve data from the database.");
+		}
+		$counter = 0;
+		foreach($row as $r)
+		{
+			if($r->daily_drop > 0.00){
+				$counter++;
+			}
+		}
+		//show("The number of days with drops: " . $counter-14);
+		$counter = $counter - 14;
+		return $counter;
+	}
+	
 }

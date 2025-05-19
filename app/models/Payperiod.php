@@ -235,5 +235,64 @@ class Payperiod
 		//this return a string of the date in the format of Y-m-d
 		return $previousPayperiod->format('m/d/Y');
 	}
+	public function getEstimateHours(){
+		$currentPayperiod = $this->getCurrentPayperiod();
+		$currentPayperiod = date('Y-m-d', strtotime($currentPayperiod));
+		
+		//show("previous payperiod: " . $currentPayperiod);
+		
+		//$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}';";
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} < (SELECT {$this->loginUniqueColumn} FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}') ORDER BY {$this->loginUniqueColumn} DESC LIMIT 5;"; 
 
+		$result = $this->query($query);
+
+		if($result == false || empty($result))
+		{
+			show("No data found");
+			return false;
+		}
+		//show($result);
+		$sum = 0;
+		foreach($result as $row)
+		{
+			
+			$sum += $row->total_hrs;
+			
+			
+		}
+		//show("sum: " . $sum);
+		$average = $sum / count($result);
+		//show("average range: " . $average*.85 . " - " . $average*1.15);
+
+		return $average;
+		
+	}
+	public function getPreviousTokeRate($totalDrops = 0.00)
+	{
+		$p_payperiod = $this->getPreviousPayperiod();
+		//I needed to convert this into the format of Y-m-d since that is how 
+		//the database store the date.
+		$p_payperiod = date('Y-m-d', strtotime($p_payperiod));
+		$row = $this->where([$this->loginUniqueColumn => $p_payperiod]);
+		
+		
+		//show($row[0]->toke_rate);
+		if($row)
+		{
+			//show("previous toke rate: " . $row[0]->toke_rate);
+			if($row[0]->toke_rate == 0.00)
+			{
+				$estimateLow = number_format($totalDrops / ($this->getEstimateHours() * 1.04), 2);
+				$estimateHigh = number_format($totalDrops / ($this->getEstimateHours() * 0.96), 2);
+				$estimateTR = "Estimate: $" . $estimateLow . " - $" . $estimateHigh;
+				return $estimateTR;
+
+			}else{
+				return $row[0]->toke_rate;
+			}
+			
+		}else{
+			return "No Toke Rate Found";
+		}
+	}
 }

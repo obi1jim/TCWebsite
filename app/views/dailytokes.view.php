@@ -19,6 +19,7 @@
   </thead>
   <tbody>
     <?php 
+    echo ("<h4>Estimated Toke Rate: $" . number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*.96,2) . " - $". number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*1.04,2)."</h4>");
         for($i = 14; $i < 28; $i++){
             echo "<tr>\n";
             echo "<th scope=\"row\">".$data['daily_tokes'][$i]->day_of_week."</th>\n";
@@ -52,6 +53,7 @@
   </thead>
   <tbody>
     <?php 
+    echo ("<h4>Toke Rate: $" . $data['pTokeRate'] . "</h4>");
         for($i = 0; $i < 14; $i++){
             echo "<tr>\n";
             echo "<th scope=\"row\">".$data['daily_tokes'][$i]->day_of_week."</th>\n";
@@ -66,6 +68,7 @@
         unset($date);
         unset($amount);
         unset($i);
+        
     ?>
   </tbody>
 </table>

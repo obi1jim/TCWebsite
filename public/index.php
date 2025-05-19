@@ -296,4 +296,17 @@ $app->loadController();
  * toke rate for the previous payperiod and make a prediction toke rate for
  * the current payperiod. I don't know how I will do this yet. Also, make a new
  * branch so that I am not working on the main branch.
+ * 
+ * I just finished getting the previous payperiod toke rate.
+ * Now I need t work on getting an estimate based on the 
+ * information of the current payperiod. perhaps I can get the last 3 
+ * payperiod hours and get the average and reduce the amount by 15%
+ * and increase the amount by 15% to get a range of the estimated toke rate.
+ * 
+ * created the function to display the previous toke rate and the
+ *  estimate for the current payperiod. when the previous toke 
+ * rate hasn't been updated, it will have an estimate as well 
+ * until it is updated. I need to keep an eye on this to make sure 
+ * the transition of the current payperiod to the previous 
+ * payperiod happens correctly. 
  */
