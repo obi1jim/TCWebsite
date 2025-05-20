@@ -309,4 +309,12 @@ $app->loadController();
  * until it is updated. I need to keep an eye on this to make sure 
  * the transition of the current payperiod to the previous 
  * payperiod happens correctly. 
+ * 
+ * 5/20/2025
+ * I corrected some flaws in the calculation of the 
+ * estimated toke rate. I also found that if I input 
+ * some estimated values for the daily drops, it gets a bit more
+ * accurate estimate. I need to wait and see if the transition 
+ * from the current payperiod to the previous payperiod will work. 
+ * In the meantime, 
  */

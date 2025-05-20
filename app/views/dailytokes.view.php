@@ -4,7 +4,7 @@
    
     <h1>Daily Tokes</h1>
     <p>These values are meant to be updated weekly. Daily Updates are not guaranteed</p>
-    <p>Daily Drops may not be 100% accurate since some data isn't available at the same time, such as digital Craps or Rapid daily drops </p>
+    <p>Daily Drops may not be 100% accurate since some data isn't available at the same time, such as digital Craps or Rapid daily drops. If you see any values such as $30,000 or $70,000 they are just guesses to help with the estimate. Once the real values are obtained they will be updated for accuracy.</p>
 
     <h3>Current Pay Period</h3>
 
@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <?php 
-    echo ("<h4>Estimated Toke Rate: $" . number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*.96,2) . " - $". number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*1.04,2)."</h4>");
+    echo ("<h5>Estimated Toke Rate: $" . number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*.96,2) . " - $". number_format(($data['ctd_sum']/($data['estimate_hours']*($data['days_drop_count']/14)))*1.04,2)."</h5>");
         for($i = 14; $i < 28; $i++){
             echo "<tr>\n";
             echo "<th scope=\"row\">".$data['daily_tokes'][$i]->day_of_week."</th>\n";
@@ -53,7 +53,7 @@
   </thead>
   <tbody>
     <?php 
-    echo ("<h4>Toke Rate: $" . $data['pTokeRate'] . "</h4>");
+    echo ("<h5>Toke Rate: $" . $data['pTokeRate'] . "</h5>");
         for($i = 0; $i < 14; $i++){
             echo "<tr>\n";
             echo "<th scope=\"row\">".$data['daily_tokes'][$i]->day_of_week."</th>\n";

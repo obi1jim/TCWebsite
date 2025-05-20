@@ -248,7 +248,7 @@ class Dailytokes
 			throw new \Exception("Failed to retrieve data from the database.");
 			die("Failed to retrieve data from the database.");
 		}
-
+		//show($result);
 		return $result[0]->total_drops;
 	}
 	public function getNumDaysWithDrops(){

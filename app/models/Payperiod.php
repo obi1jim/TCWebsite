@@ -242,7 +242,7 @@ class Payperiod
 		//show("previous payperiod: " . $currentPayperiod);
 		
 		//$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}';";
-		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} < (SELECT {$this->loginUniqueColumn} FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}') ORDER BY {$this->loginUniqueColumn} DESC LIMIT 5;"; 
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} < (SELECT {$this->loginUniqueColumn} FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}') ORDER BY {$this->loginUniqueColumn} DESC LIMIT 6;"; 
 
 		$result = $this->query($query);
 
@@ -253,15 +253,22 @@ class Payperiod
 		}
 		//show($result);
 		$sum = 0;
+		$missingHours = 0;
 		foreach($result as $row)
 		{
-			
+			if($row->total_hrs == 0.00)
+			{
+				//this is here because the total hours won't be
+				//known until Monday of the new payperiod.
+				//this will omit the missing hours from the average
+				$missingHours++;
+			}
 			$sum += $row->total_hrs;
-			
+			//echo "sum: " . $sum . "<br>";
 			
 		}
 		//show("sum: " . $sum);
-		$average = $sum / count($result);
+		$average = $sum / (count($result) - $missingHours);
 		//show("average range: " . $average*.85 . " - " . $average*1.15);
 
 		return $average;
@@ -279,6 +286,7 @@ class Payperiod
 		//show($row[0]->toke_rate);
 		if($row)
 		{
+			//show("get Estimate Hours: " . $this->getEstimateHours());
 			//show("previous toke rate: " . $row[0]->toke_rate);
 			if($row[0]->toke_rate == 0.00)
 			{
