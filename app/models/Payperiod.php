@@ -75,12 +75,12 @@ class Payperiod
 		//the current payperiod and the previous payperiod.
 		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strToday}';";
 		$result = $this->query($query);
-		//show($result[0]);
+		
 
 		//this if is for when the result is empty or false. the if($result) is temporary 
 		//and I will change it once I figure this out. 
 		if($result == false || empty($result)){
-
+			//show("the result is empty or false");
 			/*This shows up when the table doesn't have the next payperiod.
 			The current date was compared and the function did 
 			not find any start_pp dates that were greater than 
@@ -147,6 +147,8 @@ class Payperiod
 				$limit++;
 				
 			}
+		}else{
+			echo "The table has data in the start_pp column.";
 		}
 	}
 
@@ -157,7 +159,7 @@ class Payperiod
 		date_default_timezone_set('America/New_York');
 		$strtoday = date('Y-m-d');
 		//I need to get the data with the current date
-		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strtoday}';";
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} >= '{$strtoday}';";
 		$result = $this->query($query);
 
 		
@@ -191,6 +193,7 @@ class Payperiod
 		}
 		else
 		{
+			//show("No data found in getCurrentPayperiod");
 			return false;
 		}
 		//this return a string of the date in the format of Y-m-d
@@ -203,10 +206,10 @@ class Payperiod
 		date_default_timezone_set('America/New_York');
 		$strtoday = date('Y-m-d');
 		//I need to get the data with the current date
-		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strtoday}';";
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} >= '{$strtoday}';";
 		$result = $this->query($query);
 
-		
+		//show($result);
 		//check if the result is valid or empty
 		if($result)
 		{
@@ -216,11 +219,11 @@ class Payperiod
 				//creating variable to store the start of the current payperiod
 				$previousPayperiod = new \DateTime($result[0]->start_pp);
 				//modifying the date to get the start of the current payperiod
-				$previousPayperiod->modify('-28 day');
+				$previousPayperiod->modify('-14 day');
 
-				//show ("Start_of_previousPayperiod: ");
-				//show($previousPayperiod);
-				//show($previousPayperiod->format('l'));
+				// show ("Start_of_previousPayperiod: ");
+				// show($previousPayperiod);
+				// show($previousPayperiod->format('l'));
 
 			}
 			else {
@@ -237,9 +240,10 @@ class Payperiod
 	}
 	public function getEstimateHours(){
 		$currentPayperiod = $this->getCurrentPayperiod();
+		
 		$currentPayperiod = date('Y-m-d', strtotime($currentPayperiod));
 		
-		//show("previous payperiod: " . $currentPayperiod);
+		//show("current payperiod: " . $currentPayperiod);
 		
 		//$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}';";
 		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} < (SELECT {$this->loginUniqueColumn} FROM {$this->table} WHERE {$this->loginUniqueColumn} = '{$currentPayperiod}') ORDER BY {$this->loginUniqueColumn} DESC LIMIT 6;"; 
@@ -248,7 +252,7 @@ class Payperiod
 
 		if($result == false || empty($result))
 		{
-			show("No data found");
+			//show("No data found");
 			return false;
 		}
 		//show($result);

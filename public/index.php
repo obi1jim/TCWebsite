@@ -316,5 +316,12 @@ $app->loadController();
  * some estimated values for the daily drops, it gets a bit more
  * accurate estimate. I need to wait and see if the transition 
  * from the current payperiod to the previous payperiod will work. 
- * In the meantime, 
+ * 
+ * 5/23/2025
+ * I made some corrections to the dailytokes pages. There was an 
+ * issue with the current and previous payperiods not being updated correctly.
+ * I had to make changes to take in consideration the current date being 
+ * the exact date of the start of the payperiod. I fixed it now but I need 
+ * to see what it will do for next payperiod. this will take two weeks 
+ * to see if it works correctly.
  */

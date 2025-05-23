@@ -13,8 +13,12 @@ class Forgot_password
 
 	public function index()
 	{
-
-		$data['title'] = 'Forgot Password';
+		$session = new \Core\Session;
+		if($session->is_logged_in()){
+			$data['title'] = 'Change Password';
+		}else{
+			$data['title'] = 'Forgot Password';
+		}
 		$data['user'] = new \Model\User;
 		$req = new \Core\Request;
 		if($req->posted())

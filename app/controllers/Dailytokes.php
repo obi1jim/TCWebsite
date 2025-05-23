@@ -28,6 +28,8 @@ class Dailytokes
 			$data['pTokeRate'] = $payperiod->getPreviousTokeRate($data['ptd_sum']);
 			$data['estimate_hours'] = $payperiod->getEstimateHours();
 			$data['days_drop_count'] = $dailytokes->getNumDaysWithDrops();
+			//echo $data['days_drop_count'];
+			//echo $data['estimate_hours'];
 			// $data['start_pp'] = $payperiod->getCurrentPayperiod();
 			// $data['previous_pp'] = $payperiod->getPreviousPayperiod();
 

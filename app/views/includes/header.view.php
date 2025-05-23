@@ -80,7 +80,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Change Password</a></li>
+            <li><a class="dropdown-item" href="<?=ROOT?>/forgot_password">Change Password</a></li>
             <li><a class="dropdown-item" href="<?=ROOT?>/logout">Logout</a></li>
           </ul>
         </li>

@@ -1,7 +1,7 @@
 <?php $this->view("includes/header", $data); ?>
 
 <div class="mx-auto col-md-4 bg-light shadow m-4 p-4 border">
-	<h2>Forgot Password</h2>
+	<h2><?=$title?></h2>
 	<form method="post">
 
 		<!-- the name="first_name" needs to match the value in the 

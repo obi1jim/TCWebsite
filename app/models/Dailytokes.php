@@ -266,6 +266,9 @@ class Dailytokes
 		}
 		//show("The number of days with drops: " . $counter-14);
 		$counter = $counter - 14;
+		if($counter <=0){
+			$counter = 1;
+		}
 		return $counter;
 	}
 	
