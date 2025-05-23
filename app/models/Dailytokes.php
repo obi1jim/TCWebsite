@@ -158,13 +158,15 @@ class Dailytokes
 		date_default_timezone_set('America/New_York');
 		$strtoday = date('Y-m-d');
 		//check the expiry.
-		if($row[0]->expiry < $strtoday ){
+		if($row[0]->expiry < $strtoday || $row[0]->date_drop < $strtoday){
 			$dateDrop = new \DateTime($payperiod->getCurrentPayperiod());
+			// show("dateDrop is: " . $dateDrop->format('Y-m-d') . "<br>");
+			// show($row[0]);
 			$end_of_new_pp = clone $dateDrop;
 			$end_of_new_pp->modify('+27 day');
 
-			// show("The expiry date is: " . $row[0]->expiry . "<br>");
-			// show("The current date is: " . $strtoday . "<br>");
+			 //show("The expiry date is: " . $row[0]->expiry . "<br>");
+			show("The current date is: " . $strtoday . "<br>");
 			// show("The current pay period is: " . $Test_current_pp->format('m/d/Y') . "<br>");
 			// show("The previous pay period is: " . $Test_previous_pp->format('m/d/Y') . "<br>");
 			// $newpp = clone $Test_current_pp;
@@ -212,6 +214,8 @@ class Dailytokes
 			}
 
 
+		}else{
+			//show($row);
 		}
 	}
 

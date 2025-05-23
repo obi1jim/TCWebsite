@@ -73,14 +73,14 @@ class Payperiod
 		//check if the table has data in the start_pp column
 		//if it doesn't then I will populate the table with 
 		//the current payperiod and the previous payperiod.
-		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} > '{$strToday}';";
+		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} >= '{$strToday}';";
 		$result = $this->query($query);
 		
 
 		//this if is for when the result is empty or false. the if($result) is temporary 
 		//and I will change it once I figure this out. 
 		if($result == false || empty($result)){
-			//show("the result is empty or false");
+			show("the result is empty or false");
 			/*This shows up when the table doesn't have the next payperiod.
 			The current date was compared and the function did 
 			not find any start_pp dates that were greater than 
@@ -95,18 +95,18 @@ class Payperiod
 			//show($result);
 
 			$endpp = new \DateTime($result[0]->end_pp);
-			//show("endpp:");
-			//show($endpp);
+			// show("endpp:");
+			// show($endpp);
 			$startpp = clone $endpp;
 			//this gets me the start of the payperiod for the last record
 			$startpp->modify('-13 day');
-			//show("startpp:");
-			//show($startpp);
+			// show("startpp:");
+			// show($startpp);
 			$today = new \DateTime($strToday);
-			//show("today:");
-			//show($today);
-			//$difference = $today->diff($endpp);
-			//show("difference between today and the last record of the end_pp: ".$difference->days);
+			// show("today:");
+			// show($today);
+			// $difference = $today->diff($endpp);
+			// show("difference between today and the last record of the end_pp: ".$difference->days);
 			
 
 			//create a for loop an compare this to the current date. 
@@ -137,18 +137,18 @@ class Payperiod
 					'td_no_adj' => 0.00,
 					'toke_rate' => 0.00,
 				]);
-				/*show("startpp: ".$startpp->format('Y-m-d'));
+				show("startpp: ".$startpp->format('Y-m-d'));
 				show("endpp: ".$endpp->format('Y-m-d'));
 				show("today: ".$today->format('Y-m-d'));
 				show("incID: ".$incID);
 				show("limit: ".$limit);
-				*/
+				
 
 				$limit++;
 				
 			}
 		}else{
-			echo "The table has data in the start_pp column.";
+			//echo "The table has data in the start_pp column.";
 		}
 	}
 
@@ -159,10 +159,10 @@ class Payperiod
 		date_default_timezone_set('America/New_York');
 		$strtoday = date('Y-m-d');
 		//I need to get the data with the current date
-		$query = "SELECT * FROM {$this->table} WHERE {$this->loginUniqueColumn} >= '{$strtoday}';";
+		$query = "SELECT * FROM {$this->table} WHERE end_pp >= '{$strtoday}';";
 		$result = $this->query($query);
 
-		
+		//show($result);
 		//check if the result is valid or empty
 		if($result)
 		{
@@ -172,7 +172,7 @@ class Payperiod
 				//creating variable to store the start of the current payperiod
 				$Start_of_currentPayperiod = new \DateTime($result[0]->start_pp);
 				//modifying the date to get the start of the current payperiod
-				$Start_of_currentPayperiod->modify('-14 day');
+				//$Start_of_currentPayperiod->modify('-14 day');
 
 				//$previousPayperiod = clone $Start_of_currentPayperiod;
 				//$previousPayperiod->modify('-14 day');
